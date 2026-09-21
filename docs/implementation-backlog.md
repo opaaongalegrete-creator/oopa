@@ -20,6 +20,9 @@ mesmo conjunto de mudancas.
       `prod` e proteger `main` contra push direto.
 - [ ] Conectar o frontend ao Cloudflare Pages com build `npm run build`,
       saida `dist` e `VITE_CONVEX_URL` apontando para `avid-dog-344`.
+- [x] Tornar o lockfile reproduzivel no runner Linux com npm 11.19, declarando
+      explicitamente os peers opcionais `@emnapi/core` e `@emnapi/runtime`, e
+      fixar Node 24.21.0 nos workflows de qualidade e deploy.
 
 ## Correção — disponibilidade para adoção (2026-08-30)
 
