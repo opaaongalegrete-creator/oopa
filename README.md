@@ -28,12 +28,19 @@ Em outro terminal, rode o Convex quando for trabalhar no backend:
 npm run dev:convex
 ```
 
-O Convex ja foi configurado com deployment de desenvolvimento na nuvem. Se
-precisar recriar a configuracao, rode:
+Cada desenvolvedor deve usar um deployment de desenvolvimento da propria conta
+Convex. Se precisar recriar a configuracao local, rode o comando abaixo usando
+o proprio time/projeto:
 
 ```bash
-npx convex dev --once --configure existing --team felipe-dresch --project oopa --dev-deployment cloud
+npx convex dev
 ```
+
+O deployment de producao pertence a ONG (`avid-dog-344`) e nao deve ser
+publicado manualmente por alunos. O backend de producao e publicado
+automaticamente pelo GitHub Actions quando uma mudanca chega na branch `main`.
+O frontend pode ser publicado pelo Git integration do Cloudflare Pages usando
+`npm run build` e o diretorio `dist`.
 
 ## Qualidade
 

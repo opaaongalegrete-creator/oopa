@@ -2,13 +2,36 @@
 
 Use este checklist antes de publicar em producao.
 
+## Modelo de acesso e deploy
+
+- O deployment Convex de producao e `avid-dog-344` e pertence a conta da ONG.
+- Alunos desenvolvem em deployments proprios, criados nas proprias contas.
+- O repositorio publico nao recebe credenciais de producao.
+- O deploy de producao do backend ocorre em `.github/workflows/deploy.yml`,
+  acionado por push em `main` ou manualmente usando a `main`.
+- O ambiente GitHub `prod` precisa ter o **environment secret**
+  `CONVEX_DEPLOY_KEY`, criado a partir de Settings > Deploy Keys do deployment
+  `avid-dog-344` no Convex.
+- A branch `main` deve exigir Pull Request e revisao; somente quem pode fazer
+  merge em `main` pode iniciar um deploy de producao.
+
 ## Variaveis de ambiente
+
+### GitHub Actions — ambiente `prod`
+
+| Segredo | Obrigatorio | Onde configurar |
+|---------|-------------|-----------------|
+| `CONVEX_DEPLOY_KEY` | Sim | Settings > Environments > `prod` > Environment secrets |
+
+`deploy.yml` declara `environment: prod`, então o GitHub libera esse secret
+somente para o job de deploy. Ele não deve ser criado em Environment variables,
+Repository variables ou commitado no repositorio.
 
 ### Convex (dashboard ou `npx convex env set`)
 
 | Variavel | Obrigatoria | Descricao |
 |----------|-------------|-----------|
-| `CONVEX_DEPLOYMENT` | Sim (CI) | Identificador do deployment de producao |
+| `CONVEX_DEPLOYMENT` | Nao (CI) | Usado apenas em desenvolvimento local; o CI identifica producao pela chave de deploy |
 | `OCR_SPACE_API_KEY` | Sim (OCR) | Chave OCR.space para leitura de microchip |
 | `OCR_SPACE_API_URL` | Não | Endpoint alternativo fornecido em planos PRO do OCR.space |
 | `RESEND_API_KEY` | Sim (convites) | Envio de e-mail de convite e reset |
@@ -34,13 +57,27 @@ mês. O frontend converte a foto para JPEG e a reduz para até 700 KB antes de
 chamar o action. A chave fica somente no backend Convex e nunca deve usar
 prefixo `VITE_`.
 
+## Publicacao do frontend
+
+No Cloudflare Pages, configurar:
+
+- Build command: `npm run build`
+- Build output directory: `dist`
+- `VITE_CONVEX_URL`: `https://avid-dog-344.convex.cloud`
+
+O Pages pode ser conectado ao repositorio para publicar automaticamente a
+branch `main`. A chave `CONVEX_DEPLOY_KEY` nunca deve ser configurada no
+Cloudflare Pages nem exposta ao frontend.
+
 ## Comandos pre-deploy
 
 ```bash
 npm run quality
 npm run test:e2e
-npx convex deploy
 ```
+
+O deploy do Convex e executado automaticamente pelo GitHub Actions. Nao rode
+`npx convex deploy` localmente apontando para o deployment da ONG.
 
 ## Pos-deploy
 

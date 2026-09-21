@@ -8,6 +8,19 @@ codigo concluir, alterar, adicionar ou remover comportamento, contrato, fluxo,
 schema, permissao, tela, teste ou decisao relevante, atualize este backlog no
 mesmo conjunto de mudancas.
 
+## Deploy de producao e desenvolvimento externo (2026-09-21)
+
+- [x] Manter o Convex de producao no projeto da ONG, deployment `avid-dog-344`.
+- [x] Permitir que alunos desenvolvam somente em deployments das proprias
+      contas, sem compartilhar acesso ao projeto de producao.
+- [x] Automatizar o deploy do backend pela branch `main` em
+      `.github/workflows/deploy.yml`, usando somente o segredo GitHub
+      `CONVEX_DEPLOY_KEY`.
+- [ ] Configurar o environment secret `CONVEX_DEPLOY_KEY` no ambiente GitHub
+      `prod` e proteger `main` contra push direto.
+- [ ] Conectar o frontend ao Cloudflare Pages com build `npm run build`,
+      saida `dist` e `VITE_CONVEX_URL` apontando para `avid-dog-344`.
+
 ## Correção — disponibilidade para adoção (2026-08-30)
 
 - [x] A tela `/adoptions/new` lista somente animais com status `na_ong`.
